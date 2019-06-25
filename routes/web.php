@@ -11,10 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@root');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/*
+    指定路由
+    Route::post('projects', 'ProjectsController@store');
+
+    // 指定路由名（方式一）
+    Route::post('projects', 'ProjectsController@store')->name('projects.store');
+
+*/
+
+// 指定路由名（方式二）
+Route::post('projects', ['uses'=>'ProjectsController@store', 'as'=>'projects.store']);
