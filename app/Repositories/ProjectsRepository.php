@@ -27,8 +27,9 @@ class ProjectsRepository
             $name  = $thumb->hashName();
             $thumb->storeAs('public/thumbs/original', $name);
 
-            $path = storage_path('app/public/thumbs/cropped/' . $name);
-            Image::make($thumb)->resize(60,60)->save($path);
+            // 添加压缩文件
+            // $path = storage_path('app/public/thumbs/cropped/' . $name);
+            // Image::make($thumb)->resize(260,90)->save($path);
 
             return $name;
         }

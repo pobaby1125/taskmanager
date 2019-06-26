@@ -2,6 +2,10 @@
 
 @section('content')
 <div class="container">
+    <div class="card-deck">
+        @each('projects._cardlist', $projects, 'project', 'projects._cardempty')
+    </div>
+
     @include('projects._createModal')
 </div>
 @endsection

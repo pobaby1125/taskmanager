@@ -31,7 +31,7 @@ class CreateProjectRequest extends FormRequest
                     return $query->where('user_id', request()->user()->id);
                 })
             ],
-            'thumbnail' => 'image|dimensions:min_width=260,min_height=100'  // dimensions定义图片尺寸
+            'thumbnail' => 'image|dimensions:min_width=260,min_height=90'  // dimensions定义图片尺寸
         ];
     }
 
@@ -41,7 +41,7 @@ class CreateProjectRequest extends FormRequest
             'name.required'        => '项目名称是必填的～',
             'name.unique'          => '项目名称必须是唯一的，不能有重名项目哦～',
             'thumbnail.image'      => '请上传一个图片文件',
-            'thumbnail.dimensions' => '图片的最小尺寸是260x100像素',
+            'thumbnail.dimensions' => '图片的最小尺寸是260x90像素',
         ];
     }
 }
