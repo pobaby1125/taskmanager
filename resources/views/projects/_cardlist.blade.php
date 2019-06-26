@@ -2,7 +2,12 @@
     <div class="card project-card">
 
         <ul class="icon-bar">
-            <li><i class="fa fa-btn fa-times"></i></li>
+            
+            <li>
+                @include('projects._deleteForm')
+            </li>
+            
+
             <li><i class="fa fa-btn fa-cog"></i></li>
         </ul>
 

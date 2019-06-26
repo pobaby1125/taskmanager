@@ -13,6 +13,13 @@
         float: right;
         margin-right: .7em;
 
+        .btn{
+            background: transparent;
+            border:none;
+            border-radius:0;
+            padding: 0;
+        }
+
         .fa-btn {
             color: #d9534f;
         }
