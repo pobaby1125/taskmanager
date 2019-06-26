@@ -11109,3 +11109,22 @@ a {
   color: black;
 }
 
+.card .icon-bar {
+  width: 100%;
+  background-color: #dff0d8;
+  opacity: 0.7;
+  list-style: none;
+  z-index: 100;
+  position: absolute;
+  top: 0;
+}
+
+.card li {
+  float: right;
+  margin-right: 0.7em;
+}
+
+.card li .fa-btn {
+  color: #d9534f;
+}
+

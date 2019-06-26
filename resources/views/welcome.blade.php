@@ -9,3 +9,15 @@
     @include('projects._createModal')
 </div>
 @endsection
+
+@section('customJS')
+    <script>
+        $(function(){
+            $('.icon-bar').hide();
+
+            $('.project-card').hover(function(){
+                $(this).find('.icon-bar').toggle();
+            })
+        })
+    </script>
+@endsection
