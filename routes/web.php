@@ -28,4 +28,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // 指定路由名（方式二）
 Route::post('projects', ['uses'=>'ProjectsController@store', 'as'=>'projects.store']);
+Route::patch('projects/{project}', ['uses'=>'ProjectsController@update', 'as'=>'projects.update']);
 Route::delete('projects/{project}', ['uses'=>'ProjectsController@destroy', 'as'=>'projects.destroy']);

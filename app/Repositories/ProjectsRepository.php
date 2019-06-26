@@ -25,6 +25,19 @@ class ProjectsRepository
         return Project::findOrFail($id);
     }
 
+    public function update($request, $id)
+    {
+        $project = $this->find($id);
+        $project->name = $request->name;
+
+        if ( $request->hasFile('thumbnail') )
+        {
+            $project->thumbnail = $this->thumb($request);
+        }
+
+        $project->save();
+    }
+
     public function delete($id)
     {
         $project = $this->find($id);
