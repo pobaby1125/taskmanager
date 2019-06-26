@@ -3,7 +3,7 @@
 namespace App\Repositories;
 use Image;
 
-class ProjectRepository
+class ProjectsRepository
 {
     public function create($request)
     {
