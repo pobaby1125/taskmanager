@@ -11119,19 +11119,24 @@ a {
   top: 0;
 }
 
-.card li {
+.card .icon-bar li {
   float: right;
   margin-right: 0.7em;
 }
 
-.card li .btn {
+.card .icon-bar li .btn {
   background: transparent;
   border: none;
   border-radius: 0;
   padding: 0;
 }
 
-.card li .fa-btn {
+.card .icon-bar li .fa-btn {
   color: #d9534f;
+}
+
+.card .model-trigger {
+  background: transparent;
+  border: 1px solid rgba(108, 117, 125, 0.5);
 }
 

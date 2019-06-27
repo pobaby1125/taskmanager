@@ -7,21 +7,26 @@
         z-index: 100;
         position: absolute;
         top: 0;
+
+        li{
+            float: right;
+            margin-right: .7em;
+
+            .btn{
+                background: transparent;
+                border:none;
+                border-radius:0;
+                padding: 0;
+            }
+
+            .fa-btn {
+                color: #d9534f;
+            }
+        }
     }
-
-    li{
-        float: right;
-        margin-right: .7em;
-
-        .btn{
-            background: transparent;
-            border:none;
-            border-radius:0;
-            padding: 0;
-        }
-
-        .fa-btn {
-            color: #d9534f;
-        }
+    
+    .model-trigger{
+        background: transparent;
+        border: 1px solid rgba(108, 117, 125, 0.5);
     }
 }

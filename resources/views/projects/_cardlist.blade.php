@@ -1,4 +1,4 @@
-<div class="col-3 my-3">
+<div class="col-4 my-3">
     <div class="card project-card">
 
         <ul class="icon-bar">

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Validation\Validator;
 
 class UpdateProjectRequest extends FormRequest
 {
@@ -33,6 +34,12 @@ class UpdateProjectRequest extends FormRequest
             ],
             'thumbnail' => 'image|dimensions:min_width=260,min_height=90 | max:2048'  // dimensions定义图片尺寸, 限定最大不超过2m
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $this->errorBag = 'update-' . $this->route('project');
+        parent::failedValidation($validator);
     }
 
     public function messages()
