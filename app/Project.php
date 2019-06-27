@@ -12,7 +12,17 @@ class Project extends Model
         'thumbnail'
     ];
 
-    public function user(){
-        $this->belonesTo(User::class);
+    // 多对一用 belonesTo
+    public function user()
+    {
+        return $this->belonesTo(User::class);
     }
+
+    // 一对多用 hasMany
+    public function tasks()
+    {
+        return $this->hasMany('App\Task');
+    }
+
+
 }

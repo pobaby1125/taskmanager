@@ -19,10 +19,10 @@ class ProjectsController extends Controller
         $this->repo = $repo;
     }
 
-    // 增
+    // 增 (create)
     public function create()
     {
-
+        // shwo create form view
     }
 
     public function store( CreateProjectRequest $request )
@@ -31,7 +31,7 @@ class ProjectsController extends Controller
         return back();
     }
 
-    // 删
+    // 删 (delete)
     public function destroy( $id )
     {
         $this->repo->delete($id);
@@ -47,10 +47,10 @@ class ProjectsController extends Controller
     */
 
 
-    // 改
+    // 改 (update)
     public function edit()
     {
-
+        // shwo edit form view
     }
 
     public function update( UpdateProjectRequest $request, $id )
@@ -60,7 +60,7 @@ class ProjectsController extends Controller
     }
 
 
-    // 查 
+    // 查 (show\read)
 
     // 列表
     public function index()
@@ -70,11 +70,18 @@ class ProjectsController extends Controller
     }
 
     // 指定信息
+    public function show( Project $project )
+    {
+        return view('projects.show', compact('project'));
+    }
+
+    /*
     public function show( $id )
     {
         $project = $this->repo->find($id);
         return view('projects.show', compact('project'));
     }
+    */
 
     
 
