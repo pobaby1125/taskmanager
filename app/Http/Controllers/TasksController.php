@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use App\Repositories\TasksRepository;
 
 class TasksController extends Controller
 {
+    protected $repo;
+    public function __construct( TasksRepository $repo ){
+        $this->repo = $repo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,12 +41,7 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        Task::create([
-            'name'       => $request->name,
-            'completion' => (int) true,
-            'project_id' => $request->project
-        ]);
-
+        $this->repo->create($request);
         return back();
     }
 
@@ -54,6 +55,14 @@ class TasksController extends Controller
     {
         //
     }
+
+    public function check($id)
+    {
+        $this->repo->check($id);
+        return back();
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -75,7 +84,8 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->repo->update($request, $id);
+        return back();
     }
 
     /**

@@ -72,7 +72,10 @@ class ProjectsController extends Controller
     // 指定信息
     public function show( Project $project )
     {
-        return view('projects.show', compact('project'));
+        $todos = $this->repo->todos($project);
+        $dones = $this->repo->dones($project);
+        $projects = $this->repo->projects();
+        return view('projects.show', compact('project', 'todos', 'dones', 'projects'));
     }
 
     /*
