@@ -25,6 +25,12 @@ class ProjectsRepository
         return Project::findOrFail($id);
     }
 
+    public function list()
+    {
+        return request()->user()->projects()->get();
+    }
+    
+
     public function update($request, $id)
     {
         $project = $this->find($id);
