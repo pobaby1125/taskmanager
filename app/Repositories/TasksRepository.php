@@ -32,7 +32,7 @@ class TasksRepository
         $task = $this->find($id);
         $task->update([
             'name'       => $request->name,
-            'project_id' => $request->project
+            'project_id' => $request->project_id
         ]);
     }
 
@@ -40,6 +40,16 @@ class TasksRepository
     {
         $task = $this->find($id);
         $task->delete();
+    }
+
+    public function todos()
+    {
+        return auth()->user()->tasks()->where('completion',0)->paginate(5);
+    }
+
+    public function dones()
+    {
+        return auth()->user()->tasks()->where('completion',1)->paginate(5);
     }
 
 }

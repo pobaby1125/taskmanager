@@ -25,9 +25,9 @@
 
         <div class="modal-body">
                 <div class="form-group">
-                    {!! Form::label('project', '所属项目：') !!}
-                    {!! Form::select('project', $projects, $project->id, ['class'=>'form-control']) !!}
-                    {!! $errors->getBag('update-' . $task->id)->first('project', '<div class="alert alert-danger">:message</div>') !!}
+                    {!! Form::label('project_id', '所属项目：') !!}
+                    {!! Form::select('project_id', $projects, null, ['class'=>'form-control']) !!}
+                    {!! $errors->getBag('update-' . $task->id)->first('project_id', '<div class="alert alert-danger">:message</div>') !!}
                 </div>
             </div>
 

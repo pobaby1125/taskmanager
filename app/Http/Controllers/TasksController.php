@@ -12,6 +12,7 @@ class TasksController extends Controller
 {
     protected $repo;
     public function __construct( TasksRepository $repo ){
+        $this->middleware('auth');      // 查看该控制器内容时，需登录状态
         $this->repo = $repo;
     }
 
@@ -22,7 +23,11 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //
+        // auth()->user()->tasks()
+        $todos = $this->repo->todos();
+        $dones = $this->repo->dones();
+        $projects = request()->user()->projects()->pluck('name','id');
+        return view('tasks.index', compact('todos', 'dones', 'projects'));
     }
 
     /**
