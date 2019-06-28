@@ -36,12 +36,6 @@ class UpdateProjectRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
-    {
-        $this->errorBag = 'update-' . $this->route('project');
-        parent::failedValidation($validator);
-    }
-
     public function messages()
     {
         return [
@@ -49,6 +43,13 @@ class UpdateProjectRequest extends FormRequest
             'name.unique'          => '项目名称必须是唯一的，不能有重名项目哦～',
             'thumbnail.image'      => '请上传一个图片文件',
             'thumbnail.dimensions' => '图片的最小尺寸是260x90像素',
+            'thumbnail.max'        => '不要超过2M的图片'
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $this->errorBag = 'update-' . $this->route('project');
+        parent::failedValidation($validator);
     }
 }

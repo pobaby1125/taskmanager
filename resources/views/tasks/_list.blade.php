@@ -9,18 +9,20 @@
 
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="todo" role="tabpanel" aria-labelledby="todo-tab">
-        @if(count($todos))
-            <table class="table table-striped">
+        
+        @include('tasks._createForm')
+        <table class="table table-striped">
+            @if(count($todos))
                 @foreach($todos as $task)
                     <tr>
-                        <td>{{ $task->name }}</td>
+                        <td class="col-9 pl-5">{{ $task->name }}</td>
                         <td>@include('tasks._checkForm')</td>
                         <td>@include('tasks._editModel')</td>
                         <td>@include('tasks._deleteForm')</td>
                     </tr>
                 @endforeach
-            </table>
-        @endif
+            @endif
+        </table>  
     </div>
 
     <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="done-tab">

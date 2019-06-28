@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCollumToTasksTable extends Migration
+class CreateTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateCollumToTasksTable extends Migration
      */
     public function up()
     {
-        Schema::table('tasks', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('name');
             $table->integer('completion');
-            $table->integer('project_id');
+            $table->integer('project_id')->unsigned();
+            $table->timestamps();
+
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }
 
@@ -27,10 +31,6 @@ class CreateCollumToTasksTable extends Migration
      */
     public function down()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->dropColumn('name');
-            $table->dropColumn('completion');
-            $table->dropColumn('project_id');
-        });
+        Schema::dropIfExists('tasks');
     }
 }
