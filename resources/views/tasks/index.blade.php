@@ -13,8 +13,10 @@
         
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="todo" role="tabpanel" aria-labelledby="todo-tab">
-                <table class="table table-striped">
-                    @if(count($todos))
+                
+                @if(count($todos))
+                    
+                    <table class="table table-striped">
                         @foreach($todos as $task)
                             <tr>
                                 <td class="col-9 pl-5">{{ $task->name }}</td>
@@ -23,8 +25,14 @@
                                 <td>@include('tasks._deleteForm')</td>
                             </tr>
                         @endforeach
-                    @endif
-                </table>  
+                    </table>    
+                    
+                    <div class="pull-righ">
+                        {{ $todos->links() }}
+                    </div>
+                    
+                @endif
+                
             </div>
         
             <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="done-tab">
@@ -34,8 +42,13 @@
                             <tr>
                                 <td>{{ $task->name }}</td>
                             </tr>
-                        @endforeach
+                        @endforeach    
                     </table>
+                    
+                    <div class="pull-righ">
+                        {{ $dones->links() }}
+                    </div>
+                    
                 @endif
             </div>
         </div>
