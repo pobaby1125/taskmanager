@@ -1,5 +1,5 @@
 <div class="col-4 my-3">
-    <div class="card project-card">
+    <div class="card project-card h-100">
 
         <ul class="icon-bar">
             <li>

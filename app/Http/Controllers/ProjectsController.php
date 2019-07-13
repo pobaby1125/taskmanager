@@ -7,7 +7,7 @@ use App\Repositories\ProjectsRepository;
 use App\Http\Requests\CreateProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Project;
-
+use Carbon\Carbon;
 
 class ProjectsController extends Controller
 {
@@ -72,6 +72,10 @@ class ProjectsController extends Controller
     // 指定信息
     public function show( Project $project )
     {
+        // return Carbon::createFromDate()->subYears(2);
+        // return Carbon::createFromDate(1989,11,27)->age;
+        // return Carbon::now()->subMinutes(8)->diffForHumans();
+
         $todos = $this->repo->todos($project);
         $dones = $this->repo->dones($project);
         $projects = $this->repo->projects();

@@ -15,7 +15,7 @@
 
 </head>
 <body>
-    <div id="app">
+    <div>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -75,6 +75,16 @@
             @yield('content')
         </main>
     </div>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">
+                @auth
+                    当前共有{{ $total }}个任务，已完成{{ $doneCount }}个，未完成{{ $todoCount }}个。
+                @endauth
+            </span>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>

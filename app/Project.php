@@ -12,6 +12,13 @@ class Project extends Model
         'thumbnail'
     ];
 
+    // 属性获取器
+    public function getThumbnailAttribute($value)
+    {
+        return $value ?? 'default.png';
+    }
+
+
     // 多对一用 belonesTo
     public function user()
     {
@@ -24,5 +31,6 @@ class Project extends Model
         return $this->hasMany('App\Task');
     }
 
+    
 
 }

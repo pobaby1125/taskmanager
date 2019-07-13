@@ -5,9 +5,11 @@
     <div class="card-deck">
         @each('projects._cardlist', $projects, 'project', 'projects._cardempty')
 
-        <div class="card col-4 my-3">
-            <div class="card-body d-flex align-items-center justify-content-center">
-                @include('projects._createModal')
+        <div class="col-4 my-3">
+            <div class="card project-card h-100">
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    @include('projects._createModal')
+                </div>
             </div>
         </div>
   
