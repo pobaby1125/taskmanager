@@ -15,7 +15,9 @@ class StepController extends Controller
      */
     public function index(Task $task)
     {
-        return $task->steps;
+        return response()->json([
+            'steps' => $task->steps
+        ], 200);
     }
 
     /**

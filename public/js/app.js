@@ -1813,9 +1813,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    route: route
-  },
+  props: ['route'],
   data: function data() {
     return {
       message: 'hello world!',
@@ -1843,8 +1841,10 @@ __webpack_require__.r(__webpack_exports__);
     fetchSteps: function fetchSteps() {
       var _this = this;
 
-      axios.get(this.route).then(function (res) {
-        _this.steps = res.data;
+      axios.get(this.route + '/everywhere').then(function (res) {
+        _this.steps = res.data.steps;
+      })["catch"](function (err) {
+        alert("\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n ".concat(err.response.data.message, " \n \u9519\u8BEF\u7801\uFF1A").concat(err.response.status));
       });
     },
     addStep: function addStep() {

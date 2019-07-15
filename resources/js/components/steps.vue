@@ -58,9 +58,9 @@
 <script>
 import { log } from 'util';
 export default {
-    props:{
-        route
-    },
+    props:[
+        'route'
+    ],
     data(){
         return {
             message: 'hello world!',
@@ -87,8 +87,10 @@ export default {
     },
     methods:{
         fetchSteps(){
-            axios.get( this.route ).then((res)=>{
-                this.steps = res.data;
+            axios.get( this.route + '/everywhere' ).then((res)=>{
+                this.steps = res.data.steps;
+            }).catch((err)=>{
+                alert(`很抱歉，发生错误，\n ${err.response.data.message} \n 错误码：${err.response.status}` )
             })
         },
         addStep(){  // addStep:function(){}
