@@ -36,9 +36,11 @@ class StepController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Task $task, Request $request)
     {
-        //
+        return response()->json([
+            'step' =>  $task->steps()->create($request->only('name'))
+        ], 201);
     }
 
     /**
@@ -81,8 +83,8 @@ class StepController extends Controller
      * @param  \App\step  $step
      * @return \Illuminate\Http\Response
      */
-    public function destroy(step $step)
+    public function destroy(Task $task, step $step)
     {
-        //
+        $step->delete();
     }
 }

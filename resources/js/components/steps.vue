@@ -87,22 +87,29 @@ export default {
     },
     methods:{
         fetchSteps(){
-            axios.get( this.route + '/everywhere' ).then((res)=>{
+            axios.get( this.route ).then((res)=>{
                 this.steps = res.data.steps;
             }).catch((err)=>{
                 alert(`很抱歉，发生错误，\n ${err.response.data.message} \n 错误码：${err.response.status}` )
             })
         },
         addStep(){  // addStep:function(){}
-            this.steps.push({name: this.newStep, completion:false}) 
-            this.newStep = ''
+            axios.post( this.route, { name: this.newStep }).then( (res)=>{
+                this.steps.push(res.data.step)
+                this.newStep = ''
+            }).catch((err)=>{
+
+            })
         },
         toggle(task){
             task.completion = ! task.completion;
         },
-        remove(task){
-            let i = this.steps.indexOf(task)
-            this.steps.splice(i, 1)
+        remove(step){
+            axios.delete( `${this.route}/${step.id}`).then((res)=>{
+                let i = this.steps.indexOf(step)
+                this.steps.splice(i, 1)
+            })
+            
         },
         edit(task){
             // 删除当前step
