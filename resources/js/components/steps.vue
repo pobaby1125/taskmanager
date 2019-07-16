@@ -101,8 +101,11 @@ export default {
 
             })
         },
-        toggle(task){
-            task.completion = ! task.completion;
+        toggle(step){
+            axios.patch(`${this.route}/${step.id}`, {completion: !step.completion})
+                .then((res)=>{
+                    step.completion = ! step.completion
+                })
         },
         remove(step){
             axios.delete( `${this.route}/${step.id}`).then((res)=>{
@@ -120,12 +123,16 @@ export default {
             this.$refs.newStep.focus()
         },
         completeAll(){
-            this.inProcess.forEach((step)=>{
-                step.completion = true
-            })
+            axios.post(`${this.route}/complete`).then((res)=>{
+                this.inProcess.forEach((step)=>{
+                    step.completion = true
+                })
+            }) 
         },
         clearCompleted(){
-            this.steps = this.inProcess
+            axios.delete(`${this.route}/clear`).then((res)=>{
+                this.steps = this.inProcess
+            })
         }
     }
 }

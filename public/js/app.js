@@ -1859,8 +1859,12 @@ __webpack_require__.r(__webpack_exports__);
         _this2.newStep = '';
       })["catch"](function (err) {});
     },
-    toggle: function toggle(task) {
-      task.completion = !task.completion;
+    toggle: function toggle(step) {
+      axios.patch("".concat(this.route, "/").concat(step.id), {
+        completion: !step.completion
+      }).then(function (res) {
+        step.completion = !step.completion;
+      });
     },
     remove: function remove(step) {
       var _this3 = this;
@@ -1880,12 +1884,20 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs.newStep.focus();
     },
     completeAll: function completeAll() {
-      this.inProcess.forEach(function (step) {
-        step.completion = true;
+      var _this4 = this;
+
+      axios.post("".concat(this.route, "/complete")).then(function (res) {
+        _this4.inProcess.forEach(function (step) {
+          step.completion = true;
+        });
       });
     },
     clearCompleted: function clearCompleted() {
-      this.steps = this.inProcess;
+      var _this5 = this;
+
+      axios["delete"]("".concat(this.route, "/clear")).then(function (res) {
+        _this5.steps = _this5.inProcess;
+      });
     }
   }
 });

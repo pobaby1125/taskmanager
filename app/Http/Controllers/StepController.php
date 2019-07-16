@@ -39,8 +39,15 @@ class StepController extends Controller
     public function store(Task $task, Request $request)
     {
         return response()->json([
-            'step' =>  $task->steps()->create($request->only('name'))
+            'step' =>  $task->steps()->create($request->only('name'))->refresh()
         ], 201);
+    }
+
+    public function completeAll(Task $task)
+    {
+        $task->steps()->update([
+            'completion' => 1
+        ]);
     }
 
     /**
@@ -72,9 +79,11 @@ class StepController extends Controller
      * @param  \App\step  $step
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, step $step)
+    public function update(Request $request, Task $task, step $step)
     {
-        //
+        $step->update([
+            'completion' => $request->completion
+        ]);
     }
 
     /**
@@ -86,5 +95,12 @@ class StepController extends Controller
     public function destroy(Task $task, step $step)
     {
         $step->delete();
+    }
+
+    public function clearAll(Task $task)
+    {
+        $task->steps()->where('completion', 1)->delete([
+            'completion' => 1
+        ]);
     }
 }
