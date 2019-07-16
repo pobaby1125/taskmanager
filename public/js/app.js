@@ -1743,6 +1743,53 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/step-input.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/step-input.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['route'],
+  data: function data() {
+    return {
+      'newStep': ''
+    };
+  },
+  methods: {
+    addStep: function addStep() {
+      var _this = this;
+
+      axios.post(this.route, {
+        name: this.newStep
+      }).then(function (res) {
+        _this.$emit('add', res.data.step);
+
+        _this.newStep = '';
+      })["catch"](function (err) {});
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/steps.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/steps.vue?vue&type=script&lang=js& ***!
@@ -1754,15 +1801,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! util */ "./node_modules/node-libs-browser/node_modules/util/util.js");
 /* harmony import */ var util__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _step_input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./step-input */ "./resources/js/components/step-input.vue");
 //
 //
 //
@@ -1812,8 +1851,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['route'],
+  components: {
+    'step-input': _step_input__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
       message: 'hello world!',
@@ -1847,18 +1890,6 @@ __webpack_require__.r(__webpack_exports__);
         alert("\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n ".concat(err.response.data.message, " \n \u9519\u8BEF\u7801\uFF1A").concat(err.response.status));
       });
     },
-    addStep: function addStep() {
-      var _this2 = this;
-
-      // addStep:function(){}
-      axios.post(this.route, {
-        name: this.newStep
-      }).then(function (res) {
-        _this2.steps.push(res.data.step);
-
-        _this2.newStep = '';
-      })["catch"](function (err) {});
-    },
     toggle: function toggle(step) {
       axios.patch("".concat(this.route, "/").concat(step.id), {
         completion: !step.completion
@@ -1866,13 +1897,16 @@ __webpack_require__.r(__webpack_exports__);
         step.completion = !step.completion;
       });
     },
+    sync: function sync(step) {
+      this.steps.push(step);
+    },
     remove: function remove(step) {
-      var _this3 = this;
+      var _this2 = this;
 
       axios["delete"]("".concat(this.route, "/").concat(step.id)).then(function (res) {
-        var i = _this3.steps.indexOf(step);
+        var i = _this2.steps.indexOf(step);
 
-        _this3.steps.splice(i, 1);
+        _this2.steps.splice(i, 1);
       });
     },
     edit: function edit(task) {
@@ -1884,19 +1918,19 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs.newStep.focus();
     },
     completeAll: function completeAll() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios.post("".concat(this.route, "/complete")).then(function (res) {
-        _this4.inProcess.forEach(function (step) {
+        _this3.inProcess.forEach(function (step) {
           step.completion = true;
         });
       });
     },
     clearCompleted: function clearCompleted() {
-      var _this5 = this;
+      var _this4 = this;
 
       axios["delete"]("".concat(this.route, "/clear")).then(function (res) {
-        _this5.steps = _this5.inProcess;
+        _this4.steps = _this4.inProcess;
       });
     }
   }
@@ -37968,6 +38002,81 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/step-input.vue?vue&type=template&id=55b1c4d8&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/step-input.vue?vue&type=template&id=55b1c4d8& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "form-group" }, [
+        !_vm.newStep
+          ? _c("label", [_vm._v("要完成当前任务，需要哪些步骤？")])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.newStep,
+              expression: "newStep"
+            }
+          ],
+          ref: "newStep",
+          staticClass: "form-control",
+          attrs: { type: "text" },
+          domProps: { value: _vm.newStep },
+          on: {
+            keyup: function($event) {
+              if (
+                !$event.type.indexOf("key") &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              return _vm.addStep($event)
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.newStep = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _vm.newStep
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-success pull-right",
+              on: { click: _vm.addStep }
+            },
+            [_vm._v("添加步骤")]
+          )
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/steps.vue?vue&type=template&id=a7c97f28&":
 /*!********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/steps.vue?vue&type=template&id=a7c97f28& ***!
@@ -37984,131 +38093,85 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-4 mr-3" }, [
-      _vm.inProcess.length
-        ? _c("div", { staticClass: "card mb-4" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v(
-                "\n                待完成的步骤（" +
-                  _vm._s(_vm.inProcess.length) +
-                  "）\n                "
-              ),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-success pull-right",
-                  on: { click: _vm.completeAll }
-                },
-                [_vm._v("完成所有")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c(
-                "ul",
-                { staticClass: "list-group" },
-                _vm._l(_vm.inProcess, function(step) {
-                  return _c("li", { staticClass: "list-group-item" }, [
-                    _c(
-                      "span",
-                      {
-                        on: {
-                          dblclick: function($event) {
-                            return _vm.edit(step)
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(step.name))]
-                    ),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "pull-right" }, [
+    _c(
+      "div",
+      { staticClass: "col-4 mr-3" },
+      [
+        _vm.inProcess.length
+          ? _c("div", { staticClass: "card mb-4" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _vm._v(
+                  "\n                待完成的步骤（" +
+                    _vm._s(_vm.inProcess.length) +
+                    "）\n                "
+                ),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-success pull-right",
+                    on: { click: _vm.completeAll }
+                  },
+                  [_vm._v("完成所有")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c(
+                  "ul",
+                  { staticClass: "list-group" },
+                  _vm._l(_vm.inProcess, function(step) {
+                    return _c("li", { staticClass: "list-group-item" }, [
                       _c(
-                        "button",
+                        "span",
                         {
-                          staticClass: "btn btn-sm btn-success",
                           on: {
-                            click: function($event) {
-                              return _vm.toggle(step)
+                            dblclick: function($event) {
+                              return _vm.edit(step)
                             }
                           }
                         },
-                        [_vm._v("完成")]
+                        [_vm._v(_vm._s(step.name))]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-sm btn-danger",
-                          on: {
-                            click: function($event) {
-                              return _vm.remove(step)
+                      _c("span", { staticClass: "pull-right" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-success",
+                            on: {
+                              click: function($event) {
+                                return _vm.toggle(step)
+                              }
                             }
-                          }
-                        },
-                        [_vm._v("删除")]
-                      )
+                          },
+                          [_vm._v("完成")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.remove(step)
+                              }
+                            }
+                          },
+                          [_vm._v("删除")]
+                        )
+                      ])
                     ])
-                  ])
-                }),
-                0
-              )
+                  }),
+                  0
+                )
+              ])
             ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _c("div", { staticClass: "form-group" }, [
-            !_vm.newStep
-              ? _c("label", [_vm._v("要完成当前任务，需要哪些步骤？")])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.newStep,
-                  expression: "newStep"
-                }
-              ],
-              ref: "newStep",
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.newStep },
-              on: {
-                keyup: function($event) {
-                  if (
-                    !$event.type.indexOf("key") &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.addStep($event)
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.newStep = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _vm.newStep
-            ? _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-success pull-right",
-                  on: { click: _vm.addStep }
-                },
-                [_vm._v("添加步骤")]
-              )
-            : _vm._e()
-        ])
-      ])
-    ]),
+          : _vm._e(),
+        _vm._v(" "),
+        _c("step-input", { attrs: { route: _vm.route }, on: { add: _vm.sync } })
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "div",
@@ -50500,6 +50563,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/step-input.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/step-input.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _step_input_vue_vue_type_template_id_55b1c4d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./step-input.vue?vue&type=template&id=55b1c4d8& */ "./resources/js/components/step-input.vue?vue&type=template&id=55b1c4d8&");
+/* harmony import */ var _step_input_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./step-input.vue?vue&type=script&lang=js& */ "./resources/js/components/step-input.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _step_input_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _step_input_vue_vue_type_template_id_55b1c4d8___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _step_input_vue_vue_type_template_id_55b1c4d8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/step-input.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/step-input.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/step-input.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_step_input_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./step-input.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/step-input.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_step_input_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/step-input.vue?vue&type=template&id=55b1c4d8&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/step-input.vue?vue&type=template&id=55b1c4d8& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_step_input_vue_vue_type_template_id_55b1c4d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./step-input.vue?vue&type=template&id=55b1c4d8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/step-input.vue?vue&type=template&id=55b1c4d8&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_step_input_vue_vue_type_template_id_55b1c4d8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_step_input_vue_vue_type_template_id_55b1c4d8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

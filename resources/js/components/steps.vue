@@ -19,16 +19,7 @@
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <div class="form-group">
-                        <label v-if="!newStep">要完成当前任务，需要哪些步骤？</label>
-                        <input type="text" ref="newStep" v-model="newStep" @keyup.enter="addStep" class="form-control">
-                    </div>
-
-                    <button class="btn btn-sm btn-success pull-right" v-if="newStep" @click="addStep">添加步骤</button>
-                </div>
-            </div>
+            <step-input :route="route" @add="sync"></step-input>
 
         </div> 
 
@@ -57,10 +48,15 @@
 
 <script>
 import { log } from 'util';
+import StepInput from './step-input'
+
 export default {
     props:[
         'route'
     ],
+    components:{
+        'step-input': StepInput
+    },
     data(){
         return {
             message: 'hello world!',
@@ -93,19 +89,14 @@ export default {
                 alert(`很抱歉，发生错误，\n ${err.response.data.message} \n 错误码：${err.response.status}` )
             })
         },
-        addStep(){  // addStep:function(){}
-            axios.post( this.route, { name: this.newStep }).then( (res)=>{
-                this.steps.push(res.data.step)
-                this.newStep = ''
-            }).catch((err)=>{
-
-            })
-        },
         toggle(step){
             axios.patch(`${this.route}/${step.id}`, {completion: !step.completion})
                 .then((res)=>{
                     step.completion = ! step.completion
                 })
+        },
+        sync(step){
+            this.steps.push(step)
         },
         remove(step){
             axios.delete( `${this.route}/${step.id}`).then((res)=>{
