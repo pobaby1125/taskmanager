@@ -49,6 +49,7 @@
 <script>
 import { log } from 'util';
 import StepInput from './step-input'
+import { Hub } from '../event-bus'
 
 export default {
     props:[
@@ -105,13 +106,10 @@ export default {
             })
             
         },
-        edit(task){
+        edit(step){
             // 删除当前step
-            this.remove(task)
-            // 在输入框中显示当前step的name
-            this.newStep = task.name
-            // focus当前的输入框
-            this.$refs.newStep.focus()
+            this.remove(step)
+            Hub.$emit('edit', step)
         },
         completeAll(){
             axios.post(`${this.route}/complete`).then((res)=>{

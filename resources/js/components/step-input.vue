@@ -13,6 +13,8 @@
 
 
 <script>
+    import { Hub } from '../event-bus'
+    
     export default {
         props:[
             'route'
@@ -21,6 +23,9 @@
             return {
                 'newStep' : ''  
             }   
+        },
+        created(){
+            Hub.$on('edit', this.edit)
         },
         methods:{
             addStep(){
@@ -31,6 +36,13 @@
 
                 })
             },
+            edit(step){
+                // 在输入框中显示当前step的name
+                this.newStep = step.name
+
+                // focus当前的输入框
+                this.$refs.newStep.focus()
+            }
         }
     }
 </script>
