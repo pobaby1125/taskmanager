@@ -1,26 +1,8 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-4 mr-3">
-            <div class="card mb-4" v-if="inProcess.length">
-                <div class="card-header">
-                    待完成的步骤（{{ inProcess.length }}）
-                    <button class="btn btn-sm btn-success pull-right" @click="completeAll">完成所有</button>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        <li class="list-group-item" v-for="step in inProcess">
-                            <span @dblclick="edit(step)" >{{ step.name }}</span>
-                            <span class="pull-right">
-                                <button class="btn btn-sm btn-success" @click="toggle(step)">完成</button>
-                                <button class="btn btn-sm btn-danger" @click="remove(step)">删除</button>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
+            <step-list :route="route" :steps="inProcess"></step-list>
             <step-input :route="route" @add="sync"></step-input>
-
         </div> 
 
         <div class="col-4" v-show="processed.length">
@@ -49,6 +31,7 @@
 <script>
 import { log } from 'util';
 import StepInput from './step-input'
+import StepList from './step-list'
 import { Hub } from '../event-bus'
 
 export default {
@@ -56,7 +39,8 @@ export default {
         'route'
     ],
     components:{
-        'step-input': StepInput
+        'step-input': StepInput,
+        'step-list': StepList
     },
     data(){
         return {
@@ -89,12 +73,6 @@ export default {
             }).catch((err)=>{
                 alert(`很抱歉，发生错误，\n ${err.response.data.message} \n 错误码：${err.response.status}` )
             })
-        },
-        toggle(step){
-            axios.patch(`${this.route}/${step.id}`, {completion: !step.completion})
-                .then((res)=>{
-                    step.completion = ! step.completion
-                })
         },
         sync(step){
             this.steps.push(step)
