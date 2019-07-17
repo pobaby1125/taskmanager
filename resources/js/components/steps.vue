@@ -30,24 +30,20 @@ import StepList from './step-list'
 import { Hub } from '../event-bus'
 
 export default {
-    props:[
-        'route'
-    ],
+    props:{
+        route: String,
+        initialSteps: Array
+    },
     components:{
         'step-input': StepInput,
         'step-list': StepList
     },
     data(){
         return {
-            message: 'hello world!',
-            steps:[
-                // {name: 'hello world!', completion:false}
-            ],
-            newStep: ''
+            steps: this.initialSteps
         } 
     },
     mounted(){
-        this.fetchSteps()
         Hub.$on('remove', this.remove)   // 调用 Hub.$emit('remove')
     },
     computed: {
@@ -63,13 +59,6 @@ export default {
         }
     },
     methods:{
-        fetchSteps(){
-            axios.get( this.route ).then((res)=>{
-                this.steps = res.data.steps;
-            }).catch((err)=>{
-                alert(`很抱歉，发生错误，\n ${err.response.data.message} \n 错误码：${err.response.status}` )
-            })
-        },
         sync(step){
             this.steps.push(step)
         },

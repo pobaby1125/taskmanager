@@ -1976,21 +1976,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['route'],
+  props: {
+    route: String,
+    initialSteps: Array
+  },
   components: {
     'step-input': _step_input__WEBPACK_IMPORTED_MODULE_1__["default"],
     'step-list': _step_list__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
-      message: 'hello world!',
-      steps: [// {name: 'hello world!', completion:false}
-      ],
-      newStep: ''
+      steps: this.initialSteps
     };
   },
   mounted: function mounted() {
-    this.fetchSteps();
     _event_bus__WEBPACK_IMPORTED_MODULE_3__["Hub"].$on('remove', this.remove); // 调用 Hub.$emit('remove')
   },
   computed: {
@@ -2006,15 +2005,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    fetchSteps: function fetchSteps() {
-      var _this = this;
-
-      axios.get(this.route).then(function (res) {
-        _this.steps = res.data.steps;
-      })["catch"](function (err) {
-        alert("\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n ".concat(err.response.data.message, " \n \u9519\u8BEF\u7801\uFF1A").concat(err.response.status));
-      });
-    },
     sync: function sync(step) {
       this.steps.push(step);
     },
@@ -2023,19 +2013,19 @@ __webpack_require__.r(__webpack_exports__);
       this.steps.splice(i, 1);
     },
     completeAll: function completeAll() {
-      var _this2 = this;
+      var _this = this;
 
       axios.post("".concat(this.route, "/complete")).then(function (res) {
-        _this2.inProcess.forEach(function (step) {
+        _this.inProcess.forEach(function (step) {
           step.completion = true;
         });
       });
     },
     clearCompleted: function clearCompleted() {
-      var _this3 = this;
+      var _this2 = this;
 
       axios["delete"]("".concat(this.route, "/clear")).then(function (res) {
-        _this3.steps = _this3.inProcess;
+        _this2.steps = _this2.inProcess;
       });
     }
   }

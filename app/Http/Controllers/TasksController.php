@@ -60,7 +60,8 @@ class TasksController extends Controller
      */
     public function show(Task $task)
     {
-        return view('tasks._show', compact('task'));
+        $steps = $task->steps;
+        return view('tasks._show', compact('task','steps'));
     }
 
     public function check($id)
