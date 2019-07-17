@@ -1883,6 +1883,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../event-bus */ "./resources/js/event-bus.js");
 //
 //
 //
@@ -1902,7 +1903,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     route: String,
@@ -1915,6 +1916,16 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         step.completion = !step.completion;
       });
+    },
+    remove: function remove(step) {
+      axios["delete"]("".concat(this.route, "/").concat(step.id)).then(function (res) {
+        _event_bus__WEBPACK_IMPORTED_MODULE_0__["Hub"].$emit('remove', step);
+      });
+    },
+    edit: function edit(step) {
+      // 删除当前step
+      this.remove(step);
+      _event_bus__WEBPACK_IMPORTED_MODULE_0__["Hub"].$emit('edit', step);
     }
   }
 });
@@ -1960,11 +1971,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -1985,6 +1991,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.fetchSteps();
+    _event_bus__WEBPACK_IMPORTED_MODULE_3__["Hub"].$on('remove', this.remove); // 调用 Hub.$emit('remove')
   },
   computed: {
     inProcess: function inProcess() {
@@ -2012,33 +2019,23 @@ __webpack_require__.r(__webpack_exports__);
       this.steps.push(step);
     },
     remove: function remove(step) {
-      var _this2 = this;
-
-      axios["delete"]("".concat(this.route, "/").concat(step.id)).then(function (res) {
-        var i = _this2.steps.indexOf(step);
-
-        _this2.steps.splice(i, 1);
-      });
-    },
-    edit: function edit(step) {
-      // 删除当前step
-      this.remove(step);
-      _event_bus__WEBPACK_IMPORTED_MODULE_3__["Hub"].$emit('edit', step);
+      var i = this.steps.indexOf(step);
+      this.steps.splice(i, 1);
     },
     completeAll: function completeAll() {
-      var _this3 = this;
+      var _this2 = this;
 
       axios.post("".concat(this.route, "/complete")).then(function (res) {
-        _this3.inProcess.forEach(function (step) {
+        _this2.inProcess.forEach(function (step) {
           step.completion = true;
         });
       });
     },
     clearCompleted: function clearCompleted() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios["delete"]("".concat(this.route, "/clear")).then(function (res) {
-        _this4.steps = _this4.inProcess;
+        _this3.steps = _this3.inProcess;
       });
     }
   }
@@ -38266,74 +38263,65 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.steps.length
-    ? _c("div", { staticClass: "card mb-4" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _vm._v(
-            "\n        待完成的步骤（" +
-              _vm._s(_vm.steps.length) +
-              "）\n        "
-          ),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-sm btn-success pull-right",
-              on: { click: _vm.completeAll }
-            },
-            [_vm._v("完成所有")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c(
-            "ul",
-            { staticClass: "list-group" },
-            _vm._l(_vm.steps, function(step) {
-              return _c("li", { staticClass: "list-group-item" }, [
-                _c(
-                  "span",
-                  {
-                    on: {
-                      dblclick: function($event) {
-                        return _vm.edit(step)
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(step.name))]
-                ),
-                _vm._v(" "),
-                _c("span", { staticClass: "pull-right" }, [
+    ? _c(
+        "div",
+        { staticClass: "card mb-4" },
+        [
+          _vm._t("default"),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "ul",
+              { staticClass: "list-group" },
+              _vm._l(_vm.steps, function(step) {
+                return _c("li", { staticClass: "list-group-item" }, [
                   _c(
-                    "button",
+                    "span",
                     {
-                      staticClass: "btn btn-sm btn-success",
                       on: {
-                        click: function($event) {
-                          return _vm.toggle(step)
+                        dblclick: function($event) {
+                          return _vm.edit(step)
                         }
                       }
                     },
-                    [_vm._v("完成")]
+                    [_vm._v(_vm._s(step.name))]
                   ),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-danger",
-                      on: {
-                        click: function($event) {
-                          return _vm.remove(step)
+                  _c("span", { staticClass: "pull-right" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-success",
+                        on: {
+                          click: function($event) {
+                            return _vm.toggle(step)
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("删除")]
-                  )
+                      },
+                      [_vm._v("完成")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-danger",
+                        on: {
+                          click: function($event) {
+                            return _vm.remove(step)
+                          }
+                        }
+                      },
+                      [_vm._v("删除")]
+                    )
+                  ])
                 ])
-              ])
-            }),
-            0
-          )
-        ])
-      ])
+              }),
+              0
+            )
+          ])
+        ],
+        2
+      )
     : _vm._e()
 }
 var staticRenderFns = []
@@ -38363,7 +38351,23 @@ var render = function() {
       "div",
       { staticClass: "col-4 mr-3" },
       [
-        _c("step-list", { attrs: { route: _vm.route, steps: _vm.inProcess } }),
+        _c("step-list", { attrs: { route: _vm.route, steps: _vm.inProcess } }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v(
+              "\n                待完成的步骤（" +
+                _vm._s(_vm.inProcess.length) +
+                "）\n                "
+            ),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-success pull-right",
+                on: { click: _vm.completeAll }
+              },
+              [_vm._v("完成所有")]
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c("step-input", { attrs: { route: _vm.route }, on: { add: _vm.sync } })
       ],
@@ -38384,7 +38388,7 @@ var render = function() {
         staticClass: "col-4"
       },
       [
-        _c("div", { staticClass: "card" }, [
+        _c("step-list", { attrs: { route: _vm.route, steps: _vm.processed } }, [
           _c("div", { staticClass: "card-header" }, [
             _vm._v(
               "\n                已完成的步骤（" +
@@ -38399,60 +38403,10 @@ var render = function() {
               },
               [_vm._v("清除已完成")]
             )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "ul",
-              { staticClass: "list-group" },
-              _vm._l(_vm.processed, function(step) {
-                return _c("li", { staticClass: "list-group-item" }, [
-                  _c(
-                    "span",
-                    {
-                      on: {
-                        dblclick: function($event) {
-                          return _vm.edit(step)
-                        }
-                      }
-                    },
-                    [_vm._v(_vm._s(step.name))]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "pull-right" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-sm btn-primary",
-                        on: {
-                          click: function($event) {
-                            return _vm.toggle(step)
-                          }
-                        }
-                      },
-                      [_vm._v("取消")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-sm btn-danger",
-                        on: {
-                          click: function($event) {
-                            return _vm.remove(step)
-                          }
-                        }
-                      },
-                      [_vm._v("删除")]
-                    )
-                  ])
-                ])
-              }),
-              0
-            )
           ])
         ])
-      ]
+      ],
+      1
     )
   ])
 }

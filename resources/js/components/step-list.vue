@@ -1,9 +1,8 @@
 <template>
     <div class="card mb-4" v-if="steps.length">
-        <div class="card-header">
-            待完成的步骤（{{ steps.length }}）
-            <button class="btn btn-sm btn-success pull-right" @click="completeAll">完成所有</button>
-        </div>
+        
+        <slot></slot>
+
         <div class="card-body">
             <ul class="list-group">
                 <li class="list-group-item" v-for="step in steps">
@@ -19,6 +18,9 @@
 </template>
 
 <script>
+
+import { Hub } from '../event-bus'
+
 export default {
     props:{
         route: String,
@@ -30,6 +32,17 @@ export default {
                 .then((res)=>{
                     step.completion = ! step.completion
                 })
+        },
+        remove(step){
+            axios.delete( `${this.route}/${step.id}`).then((res)=>{
+                Hub.$emit('remove', step)
+            })
+            
+        },
+        edit(step){
+            // 删除当前step
+            this.remove(step)
+            Hub.$emit('edit', step)
         },
     }
 }

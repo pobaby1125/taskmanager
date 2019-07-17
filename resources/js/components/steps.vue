@@ -1,28 +1,23 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-4 mr-3">
-            <step-list :route="route" :steps="inProcess"></step-list>
+            <step-list :route="route" :steps="inProcess">
+                <div class="card-header">
+                    待完成的步骤（{{ inProcess.length }}）
+                    <button class="btn btn-sm btn-success pull-right" @click="completeAll">完成所有</button>
+                </div>
+            </step-list>
+
             <step-input :route="route" @add="sync"></step-input>
         </div> 
 
         <div class="col-4" v-show="processed.length">
-            <div class="card">
+            <step-list :route="route" :steps="processed">
                 <div class="card-header">
                     已完成的步骤（{{ processed.length }}）
                     <button class="btn btn-sm btn-danger pull-right" @click="clearCompleted">清除已完成</button>
                 </div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        <li class="list-group-item" v-for="step in processed">
-                            <span @dblclick="edit(step)" >{{ step.name }}</span>
-                            <span class="pull-right">
-                                <button class="btn btn-sm btn-primary" @click="toggle(step)">取消</button>
-                                <button class="btn btn-sm btn-danger" @click="remove(step)">删除</button>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            </step-list>
         </div>
     </div>
 </template>
@@ -53,6 +48,7 @@ export default {
     },
     mounted(){
         this.fetchSteps()
+        Hub.$on('remove', this.remove)   // 调用 Hub.$emit('remove')
     },
     computed: {
         inProcess(){
@@ -78,16 +74,9 @@ export default {
             this.steps.push(step)
         },
         remove(step){
-            axios.delete( `${this.route}/${step.id}`).then((res)=>{
-                let i = this.steps.indexOf(step)
-                this.steps.splice(i, 1)
-            })
-            
-        },
-        edit(step){
-            // 删除当前step
-            this.remove(step)
-            Hub.$emit('edit', step)
+            let i = this.steps.indexOf(step)
+            this.steps.splice(i, 1)
+ 
         },
         completeAll(){
             axios.post(`${this.route}/complete`).then((res)=>{
