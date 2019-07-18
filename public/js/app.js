@@ -1853,14 +1853,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addStep: function addStep() {
-      var _this = this;
-
       axios.post(this.route, {
         name: this.newStep
       }).then(function (res) {
-        _this.$emit('add', res.data.step);
-
-        _this.newStep = '';
+        // this.$emit('add', res.data.step)
+        // this.newStep = ''
+        //添加后直接刷新
+        window.location.reload();
       })["catch"](function (err) {});
     },
     edit: function edit(step) {
@@ -2005,9 +2004,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    sync: function sync(step) {
-      this.steps.push(step);
-    },
+    // sync(step){
+    //     this.steps.push(step)
+    // },
     remove: function remove(step) {
       var i = this.steps.indexOf(step);
       this.steps.splice(i, 1);
@@ -38359,7 +38358,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("step-input", { attrs: { route: _vm.route }, on: { add: _vm.sync } })
+        _c("step-input", { attrs: { route: _vm.route } })
       ],
       1
     ),

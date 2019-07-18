@@ -30,8 +30,10 @@
         methods:{
             addStep(){
                 axios.post( this.route, { name: this.newStep }).then( (res)=>{
-                    this.$emit('add', res.data.step)
-                    this.newStep = ''
+                    // this.$emit('add', res.data.step)
+                    // this.newStep = ''
+                    //添加后直接刷新
+                    window.location.reload();
                 }).catch((err)=>{
 
                 })

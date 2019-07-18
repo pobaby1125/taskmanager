@@ -8,7 +8,7 @@
                 </div>
             </step-list>
 
-            <step-input :route="route" @add="sync"></step-input>
+            <step-input :route="route"></step-input>
         </div> 
 
         <div class="col-4" v-show="processed.length">
@@ -59,9 +59,9 @@ export default {
         }
     },
     methods:{
-        sync(step){
-            this.steps.push(step)
-        },
+        // sync(step){
+        //     this.steps.push(step)
+        // },
         remove(step){
             let i = this.steps.indexOf(step)
             this.steps.splice(i, 1)
