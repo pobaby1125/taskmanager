@@ -1882,7 +1882,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../event-bus */ "./resources/js/event-bus.js");
 //
 //
 //
@@ -1902,7 +1901,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     route: String,
@@ -1913,18 +1911,18 @@ __webpack_require__.r(__webpack_exports__);
       axios.patch("".concat(this.route, "/").concat(step.id), {
         completion: !step.completion
       }).then(function (res) {
-        step.completion = !step.completion;
+        window.location.reload();
       });
     },
     remove: function remove(step) {
       axios["delete"]("".concat(this.route, "/").concat(step.id)).then(function (res) {
-        _event_bus__WEBPACK_IMPORTED_MODULE_0__["Hub"].$emit('remove', step);
+        window.location.reload();
       });
     },
     edit: function edit(step) {
       // 删除当前step
       this.remove(step);
-      _event_bus__WEBPACK_IMPORTED_MODULE_0__["Hub"].$emit('edit', step);
+      Hub.$emit('edit', step);
     }
   }
 });
@@ -1944,7 +1942,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var util__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _step_input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./step-input */ "./resources/js/components/step-input.vue");
 /* harmony import */ var _step_list__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./step-list */ "./resources/js/components/step-list.vue");
-/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../event-bus */ "./resources/js/event-bus.js");
 //
 //
 //
@@ -1970,61 +1967,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     route: String,
-    initialSteps: Array
+    todos: Array,
+    dones: Array
   },
   components: {
     'step-input': _step_input__WEBPACK_IMPORTED_MODULE_1__["default"],
     'step-list': _step_list__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  data: function data() {
-    return {
-      steps: this.initialSteps
-    };
-  },
-  mounted: function mounted() {
-    _event_bus__WEBPACK_IMPORTED_MODULE_3__["Hub"].$on('remove', this.remove); // 调用 Hub.$emit('remove')
-  },
-  computed: {
-    inProcess: function inProcess() {
-      return this.steps.filter(function (step) {
-        return !step.completion;
-      });
-    },
-    processed: function processed() {
-      return this.steps.filter(function (step) {
-        return step.completion;
-      });
-    }
-  },
   methods: {
-    // sync(step){
-    //     this.steps.push(step)
-    // },
-    remove: function remove(step) {
-      var i = this.steps.indexOf(step);
-      this.steps.splice(i, 1);
-    },
     completeAll: function completeAll() {
-      var _this = this;
-
       axios.post("".concat(this.route, "/complete")).then(function (res) {
-        _this.inProcess.forEach(function (step) {
-          step.completion = true;
-        });
+        window.location.reload();
       });
     },
     clearCompleted: function clearCompleted() {
-      var _this2 = this;
-
       axios["delete"]("".concat(this.route, "/clear")).then(function (res) {
-        _this2.steps = _this2.inProcess;
+        window.location.reload();
       });
     }
   }
@@ -38340,11 +38304,11 @@ var render = function() {
       "div",
       { staticClass: "col-4 mr-3" },
       [
-        _c("step-list", { attrs: { route: _vm.route, steps: _vm.inProcess } }, [
+        _c("step-list", { attrs: { route: _vm.route, steps: _vm.todos } }, [
           _c("div", { staticClass: "card-header" }, [
             _vm._v(
               "\n                待完成的步骤（" +
-                _vm._s(_vm.inProcess.length) +
+                _vm._s(_vm.todos.length) +
                 "）\n                "
             ),
             _c(
@@ -38370,18 +38334,18 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.processed.length,
-            expression: "processed.length"
+            value: _vm.dones.length,
+            expression: "dones.length"
           }
         ],
         staticClass: "col-4"
       },
       [
-        _c("step-list", { attrs: { route: _vm.route, steps: _vm.processed } }, [
+        _c("step-list", { attrs: { route: _vm.route, steps: _vm.dones } }, [
           _c("div", { staticClass: "card-header" }, [
             _vm._v(
               "\n                已完成的步骤（" +
-                _vm._s(_vm.processed.length) +
+                _vm._s(_vm.dones.length) +
                 "）\n                "
             ),
             _c(

@@ -19,8 +19,6 @@
 
 <script>
 
-import { Hub } from '../event-bus'
-
 export default {
     props:{
         route: String,
@@ -30,12 +28,12 @@ export default {
         toggle(step){
             axios.patch(`${this.route}/${step.id}`, {completion: !step.completion})
                 .then((res)=>{
-                    step.completion = ! step.completion
+                    window.location.reload()
                 })
         },
         remove(step){
             axios.delete( `${this.route}/${step.id}`).then((res)=>{
-                Hub.$emit('remove', step)
+                window.location.reload()
             })
             
         },

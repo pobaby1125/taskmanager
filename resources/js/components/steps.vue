@@ -1,9 +1,9 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-4 mr-3">
-            <step-list :route="route" :steps="inProcess">
+            <step-list :route="route" :steps="todos">
                 <div class="card-header">
-                    待完成的步骤（{{ inProcess.length }}）
+                    待完成的步骤（{{ todos.length }}）
                     <button class="btn btn-sm btn-success pull-right" @click="completeAll">完成所有</button>
                 </div>
             </step-list>
@@ -11,10 +11,10 @@
             <step-input :route="route"></step-input>
         </div> 
 
-        <div class="col-4" v-show="processed.length">
-            <step-list :route="route" :steps="processed">
+        <div class="col-4" v-show="dones.length">
+            <step-list :route="route" :steps="dones">
                 <div class="card-header">
-                    已完成的步骤（{{ processed.length }}）
+                    已完成的步骤（{{ dones.length }}）
                     <button class="btn btn-sm btn-danger pull-right" @click="clearCompleted">清除已完成</button>
                 </div>
             </step-list>
@@ -27,56 +27,26 @@
 import { log } from 'util';
 import StepInput from './step-input'
 import StepList from './step-list'
-import { Hub } from '../event-bus'
 
 export default {
     props:{
         route: String,
-        initialSteps: Array
+        todos: Array,
+        dones: Array
     },
     components:{
         'step-input': StepInput,
         'step-list': StepList
     },
-    data(){
-        return {
-            steps: this.initialSteps
-        } 
-    },
-    mounted(){
-        Hub.$on('remove', this.remove)   // 调用 Hub.$emit('remove')
-    },
-    computed: {
-        inProcess(){
-            return this.steps.filter((step)=>{
-                return !step.completion
-            })
-        },
-        processed(){
-            return this.steps.filter((step)=>{
-                return step.completion
-            })
-        }
-    },
     methods:{
-        // sync(step){
-        //     this.steps.push(step)
-        // },
-        remove(step){
-            let i = this.steps.indexOf(step)
-            this.steps.splice(i, 1)
- 
-        },
         completeAll(){
             axios.post(`${this.route}/complete`).then((res)=>{
-                this.inProcess.forEach((step)=>{
-                    step.completion = true
-                })
+                window.location.reload()
             }) 
         },
         clearCompleted(){
             axios.delete(`${this.route}/clear`).then((res)=>{
-                this.steps = this.inProcess
+                window.location.reload()
             })
         }
     }
