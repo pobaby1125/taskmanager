@@ -36,6 +36,7 @@ Route::resource('projects', 'ProjectsController');
 Route::resource('tasks', 'TasksController');
 
 Route::post('tasks/{task}/steps/complete', 'StepController@completeAll');
+Route::patch('tasks/{task}/steps/{step}/toggle', 'StepController@toggle');
 Route::delete('tasks/{task}/steps/clear', 'StepController@clearAll');
 Route::resource('tasks.steps', 'StepController');
 

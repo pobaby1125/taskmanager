@@ -1882,6 +1882,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! util */ "./node_modules/node-libs-browser/node_modules/util/util.js");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -1901,14 +1903,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     route: String,
     steps: Array
   },
+  data: function data() {
+    return {
+      editedStep: ""
+    };
+  },
   methods: {
     toggle: function toggle(step) {
-      axios.patch("".concat(this.route, "/").concat(step.id), {
+      axios.patch("".concat(this.route, "/").concat(step.id, "/toggle"), {
         completion: !step.completion
       }).then(function (res) {
         window.location.reload();
@@ -1919,10 +1929,18 @@ __webpack_require__.r(__webpack_exports__);
         window.location.reload();
       });
     },
-    edit: function edit(step) {
-      // 删除当前step
-      this.remove(step);
-      Hub.$emit('edit', step);
+    edit: function edit(step, i) {
+      console.log(this.$refs.stepInput);
+      this.$refs.stepName[i].style.display = 'none';
+      this.$refs.stepInput[i].style.display = 'block';
+      this.editedStep = step.name;
+    },
+    update: function update(step) {
+      axios.patch("".concat(this.route, "/").concat(step.id), {
+        name: this.editedStep
+      }).then(function (res) {
+        window.location.reload();
+      });
     }
   }
 });
@@ -38226,19 +38244,61 @@ var render = function() {
             _c(
               "ul",
               { staticClass: "list-group" },
-              _vm._l(_vm.steps, function(step) {
+              _vm._l(_vm.steps, function(step, i) {
                 return _c("li", { staticClass: "list-group-item" }, [
                   _c(
                     "span",
                     {
+                      ref: "stepName",
+                      refInFor: true,
                       on: {
                         dblclick: function($event) {
-                          return _vm.edit(step)
+                          return _vm.edit(step, i)
                         }
                       }
                     },
                     [_vm._v(_vm._s(step.name))]
                   ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.editedStep,
+                        expression: "editedStep"
+                      }
+                    ],
+                    ref: "stepInput",
+                    refInFor: true,
+                    staticClass: "form-control",
+                    staticStyle: { display: "none" },
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.editedStep },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.update(step)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.editedStep = $event.target.value
+                      }
+                    }
+                  }),
                   _vm._v(" "),
                   _c("span", { staticClass: "pull-right" }, [
                     _c(

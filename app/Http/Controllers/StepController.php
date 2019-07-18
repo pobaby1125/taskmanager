@@ -81,10 +81,17 @@ class StepController extends Controller
      * @param  \App\step  $step
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task, step $step)
+    public function toggle(Request $request, Task $task, step $step)
     {
         $step->update([
             'completion' => $request->completion
+        ]);
+    }
+
+    public function update(Request $request, Task $task, step $step)
+    {
+        $step->update([
+            'name' => $request->name
         ]);
     }
 
