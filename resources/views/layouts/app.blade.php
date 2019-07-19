@@ -34,7 +34,7 @@
                             </a>
                         </li>
                         
-                        <search class="ml-3"></search>
+                        <search class="ml-3" :task-list="{{ $tasksList }}"></search>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

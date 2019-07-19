@@ -14,6 +14,9 @@
 <script>
 import { log } from 'util';
 export default {
+    props:{
+        taskList: Array
+    },
     data(){
         return {
             tasks:[]
@@ -21,11 +24,16 @@ export default {
     },
     methods:{
         fetch(){
-            axios.get('/tasks/search').then((res)=>{
-                this.tasks = res.data.tasks;
-            }).catch((err)=>{
+            console.log('getTaskList');
+            
+            console.log(this.taskList);
+            
+            this.tasks = this.taskList
+            // axios.get('/tasks/search').then((res)=>{
+            //     this.tasks = res.data.tasks;
+            // }).catch((err)=>{
 
-            })
+            // })
         }
     }
 }

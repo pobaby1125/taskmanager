@@ -24,5 +24,6 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('layouts.app', 'App\Http\ViewComposer\TaskCountComposer');
+        view()->composer('layouts.app', 'App\Http\ViewComposer\TaskAllComposer');
     }
 }

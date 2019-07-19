@@ -3470,6 +3470,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    taskList: Array
+  },
   data: function data() {
     return {
       tasks: []
@@ -3477,11 +3480,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     fetch: function fetch() {
-      var _this = this;
-
-      axios.get('/tasks/search').then(function (res) {
-        _this.tasks = res.data.tasks;
-      })["catch"](function (err) {});
+      console.log('getTaskList');
+      console.log(this.taskList);
+      this.tasks = this.taskList; // axios.get('/tasks/search').then((res)=>{
+      //     this.tasks = res.data.tasks;
+      // }).catch((err)=>{
+      // })
     }
   }
 });
