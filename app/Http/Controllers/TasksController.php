@@ -30,6 +30,12 @@ class TasksController extends Controller
         return view('tasks.index', compact('todos', 'dones', 'projects'));
     }
 
+    public function search(){
+        return response()->json([
+            'tasks' => $this->repo->all()
+        ], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

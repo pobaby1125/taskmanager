@@ -33,6 +33,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'ProjectsController@index');
 
 Route::resource('projects', 'ProjectsController');
+
+Route::get('tasks/search', 'TasksController@search');
 Route::resource('tasks', 'TasksController');
 
 Route::post('tasks/{task}/steps/complete', 'StepController@completeAll');

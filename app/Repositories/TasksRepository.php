@@ -42,6 +42,11 @@ class TasksRepository
         $task->delete();
     }
 
+    public function all()
+    {
+        return auth()->user()->tasks;
+    }
+
     public function todos()
     {
         return auth()->user()->tasks()->where('completion',0)->paginate(5);

@@ -24,6 +24,8 @@ Vue.component('steps', require('./components/steps.vue').default);
 
 Vue.component('parent', require('./components/Parent.vue').default);
 
+Vue.component('search', require('./components/search/search.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

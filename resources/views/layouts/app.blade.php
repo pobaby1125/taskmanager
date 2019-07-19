@@ -15,7 +15,7 @@
 
 </head>
 <body>
-    <div>
+    <div id="appContain">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -33,6 +33,8 @@
                                 所有任务
                             </a>
                         </li>
+                        
+                        <search class="ml-3"></search>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
