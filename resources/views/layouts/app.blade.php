@@ -34,7 +34,9 @@
                             </a>
                         </li>
                         
-                        <search class="ml-3" :task-list="{{ $tasksList }}"></search>
+                        @auth
+                            <search class="ml-3" :task-list="{{ $tasksList }}"></search>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
