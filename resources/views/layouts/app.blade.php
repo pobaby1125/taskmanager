@@ -33,7 +33,7 @@
                                 所有任务
                             </a>
                         </li>
-                        
+
                         @auth
                             <search class="ml-3" :task-list="{{ $tasksList }}"></search>
                         @endauth
