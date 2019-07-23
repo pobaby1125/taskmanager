@@ -33,15 +33,11 @@
                                 所有任务
                             </a>
                         </li>
-<<<<<<< HEAD
 
                         @auth
                             <search class="ml-3" :task-list="{{ $tasksList }}"></search>
                         @endauth
-=======
-                        
-                        <search class="ml-3" :task-list="{{ $tasksList }}"></search>
->>>>>>> parent of 1f420e9... 完善搜索功能&添加下拉选项&根据关键字显示选项
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
