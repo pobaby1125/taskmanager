@@ -36,8 +36,12 @@ class TasksController extends Controller
         ], 200);
     }
 
-    public function charts(){
-        return view('tasks.charts');
+    public function charts()
+    {
+        $todoCount = $this->repo->todoCount();
+        $doneCount = $this->repo->doneCount();
+        $totalCount= $this->repo->totalCount();
+        return view('tasks.charts', compact('todoCount', 'doneCount', 'totalCount'));
     }
 
     /**

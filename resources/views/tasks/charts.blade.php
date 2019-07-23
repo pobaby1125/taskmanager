@@ -15,30 +15,36 @@
 
             data = {
                 datasets: [{
-                    data: [10, 20, 30],
+                    data: [{{ $doneCount }}, {{ $todoCount }}],
                     backgroundColor: [
-                        "#FF6384",
                         "#36A2EB",
-                        "#FFCE56"
+                        "#FF6384"
+                        
                     ],
                     hoverBackgroundColor: [
-                        "#FF6384",
                         "#36A2EB",
-                        "#FFCE56"
+                        "#FF6384"
+                        
                     ]
                 }],
             
                 // These labels appear in the legend and in the tooltips when hovering different arcs
                 labels: [
-                    'Red',
-                    'Blue',
-                    'Yellow'
+                    '已完成',
+                    '未完成'
                 ]
             };
 
             var myPieChart = new Chart(pieChart, {
                 type: 'pie',
-                data: data
+                data: data,
+                options: {
+                    responsive: true,
+                    title: {
+                        display:true,
+                        text: "所有任务的完成比例（总数：{{ $totalCount }}）"
+                    }
+                }
             });
         })
     </script>
