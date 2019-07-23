@@ -7,6 +7,9 @@ use App\Task;
 use App\Repositories\TasksRepository;
 use App\Http\Requests\CreateTask;
 use App\Http\Requests\UpdateTask;
+use App\Repositories\ProjectsRepository;
+
+use App\Project;
 
 class TasksController extends Controller
 {
@@ -36,12 +39,24 @@ class TasksController extends Controller
         ], 200);
     }
 
-    public function charts()
+    public function charts(ProjectsRepository $project)
     {
         $todoCount = $this->repo->todoCount();
         $doneCount = $this->repo->doneCount();
         $totalCount= $this->repo->totalCount();
-        return view('tasks.charts', compact('todoCount', 'doneCount', 'totalCount'));
+
+        $projects = $project->list();
+        $arrNames = [];
+        foreach( $projects as $project )
+        {
+            $arrNames[] = $project->name;
+        }
+        $names = json_encode($arrNames, JSON_UNESCAPED_UNICODE);
+
+        $tasksCountArray = TasksCountArray($projects);
+        $tasksCount = json_encode($tasksCountArray, JSON_UNESCAPED_UNICODE);
+
+        return view('tasks.charts', compact('todoCount', 'doneCount', 'totalCount', 'names', 'tasksCount'));
     }
 
     /**
