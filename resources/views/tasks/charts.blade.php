@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container col-md-8 col-md-offset-2">
         <div class="row">
                 <div class="col-md-4"> 
                     <canvas id="pieChart" width="300" height="400"></canvas>
@@ -15,6 +15,11 @@
                         data-datas={{ $tasksCount }} 
                     >
                     </div>       
+                </div>
+
+                <div class="col-md-4"> 
+                    <canvas id="radarChart" width="300" height="400"></canvas>
+                    <div id="radar-data" data-datas="{{ $RadarDatas }}"></div>
                 </div>
         </div>
     </div>    

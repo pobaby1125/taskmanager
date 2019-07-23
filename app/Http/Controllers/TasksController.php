@@ -47,16 +47,20 @@ class TasksController extends Controller
 
         $projects = $project->list();
         $arrNames = [];
+        $arrRadarDatas = [];
         foreach( $projects as $project )
         {
             $arrNames[] = $project->name;
+            $arrRadarDatas[] = $this->repo->getTaskInfo( $project );
         }
-        $names = json_encode($arrNames, JSON_UNESCAPED_UNICODE);
 
         $tasksCountArray = TasksCountArray($projects);
         $tasksCount = json_encode($tasksCountArray, JSON_UNESCAPED_UNICODE);
 
-        return view('tasks.charts', compact('todoCount', 'doneCount', 'totalCount', 'names', 'tasksCount'));
+        $names = json_encode($arrNames, JSON_UNESCAPED_UNICODE);
+        $RadarDatas = json_encode($arrRadarDatas,JSON_UNESCAPED_UNICODE);
+
+        return view('tasks.charts', compact('todoCount', 'doneCount', 'totalCount', 'names', 'tasksCount','RadarDatas'));
     }
 
     /**

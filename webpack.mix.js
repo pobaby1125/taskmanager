@@ -17,6 +17,7 @@ mix.js('resources/js/app.js', 'public/js')
         'resources/js/charts/Chart.min.js',  //文件路径:resources/assets/js
         'resources/js/charts/pie.js',
         'resources/js/charts/bar.js',
+        'resources/js/charts/radar.js',
         ],
         'public/js/charts.js'
     );

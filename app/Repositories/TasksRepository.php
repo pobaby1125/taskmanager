@@ -72,4 +72,22 @@ class TasksRepository
         return auth()->user()->tasks()->count();
     }
 
+    public function getTaskInfo( $project )
+    {
+        $name = $project->name;
+        $totalPP = $project->tasks()->count();
+        $todoPP = $project->tasks()->where('completion',0)->count();
+        $donePP = $project->tasks()->where('completion',1)->count();
+
+        return array(
+            'label' => $name,
+            'backgroundColor' => randColor(),
+            'borderColor' => randColor(),
+            'pointBackgroundColor' => randColor(),
+            'pointBorderColor' => "#fff",
+            'pointHoverBackgroundColor' => "#fff",
+            'data' => [$totalPP, $todoPP, $donePP]
+        );
+    }
+
 }
