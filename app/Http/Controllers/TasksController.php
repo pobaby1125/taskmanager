@@ -36,6 +36,10 @@ class TasksController extends Controller
         ], 200);
     }
 
+    public function charts(){
+        return view('tasks.charts');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

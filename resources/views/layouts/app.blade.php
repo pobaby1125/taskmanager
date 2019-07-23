@@ -34,6 +34,12 @@
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="{{ route('tasks.charts') }}" class="nav-link">
+                                图表统计
+                            </a>
+                        </li>
+
                         @auth
                             <search class="ml-3" :task-list="{{ $tasksList }}"></search>
                         @endauth

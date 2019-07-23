@@ -35,6 +35,7 @@ Route::get('/', 'ProjectsController@index');
 Route::resource('projects', 'ProjectsController');
 
 Route::get('tasks/search', 'TasksController@search');
+Route::get('tasks/charts', 'TasksController@charts')->name('tasks.charts');
 Route::resource('tasks', 'TasksController');
 
 Route::post('tasks/{task}/steps/complete', 'StepController@completeAll');
