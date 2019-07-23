@@ -15,7 +15,7 @@
             if ( auth()->user() )
             {
                 $view->with([
-                    'tasksList'     => ( auth()->user() ) ? $this->task->all() : ''
+                    'tasksList'     => $this->task->all()
                 ]);
             }
         }
